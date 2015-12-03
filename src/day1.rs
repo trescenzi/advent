@@ -1,14 +1,16 @@
 use std::fs::File;
 use std::io::Read;
 
-fn follow_directions(directions: String) -> i32 {
+fn scan_directions(directions: String) {
     return directions.chars()
-        .fold(0, |acc, curr| {
-            match curr {
-                '(' => acc + 1,
-                ')' => acc - 1,
-                _ => acc
-            }
+        .scan(0, |acc, curr| {
+            *acc += match curr {
+                '(' =>  1,
+                ')' => -1,
+                _ => 0,
+            };
+
+            return Some(*acc);
         });
 }
 
@@ -18,5 +20,5 @@ pub fn get_floor_num() -> i32 {
         Ok(mut f) => f.read_to_string(&mut directions).ok().expect("string failed"),
         Err(_) => return -42
     };
-    return follow_directions(directions);
+    return scan_directions(directions).last().unwrap();
 }
