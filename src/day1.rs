@@ -1,17 +1,19 @@
 use std::fs::File;
 use std::io::Read;
 
-fn scan_directions(directions: String) {
-    return directions.chars()
-        .scan(0, |acc, curr| {
-            *acc += match curr {
-                '(' =>  1,
-                ')' => -1,
-                _ => 0,
-            };
+fn interpret_direction(curr_floor: &mut i32, direction: char) -> Option<i32> {
+    *curr_floor += match direction {
+        '(' =>  1,
+        ')' => -1,
+        _ => 0,
+    };
 
-            return Some(*acc);
-        });
+    return Some(*curr_floor);
+}
+
+fn scan_directions(directions: String) -> Box<Iterator<Item=i32>> {
+    return Box::new(directions.chars()
+        .scan(0, interpret_direction));
 }
 
 pub fn get_floor_num() -> i32 {
