@@ -24,30 +24,26 @@ pub fn parse_instruction(instruction : String) -> (String, usize, usize, usize, 
 }
 
 pub fn lights_left_on() -> usize {
-    let mut lights : [[u32; 1000]; 1000] = [[0; 1000]; 1000];
+    let mut lights : [[bool; 1000]; 1000] = [[false; 1000]; 1000];
     for line in BufReader::new(File::open("src/light_instructions.txt").ok().expect("Bad file_name")).lines() {
         let (instruction, start_x, start_y, end_x, end_y) = parse_instruction(line.ok().expect("Bad line"));
         for y in start_y..end_y + 1 {
             for x in start_x..end_x + 1 {
                 lights[x][y] = 
                     if instruction == "on" {
-                        1
+                        true
                     } else if instruction == "off" {
-                        0
+                        false
                     } else {
-                        if lights[x][y] == 1 {
-                            0
-                        } else {
-                            1
-                        }
+                        !lights[x][y]
                     };
             }
         }
     }
-    lights.into_iter().map(|row| row.into_iter().filter(|x| **x == 1).count())
+    lights.into_iter().map(|row| row.into_iter().filter(|x| **x).count())
         .fold(0, |sum, curr| sum + curr)
 }
-
+/*
 pub fn brightness() -> usize {
     let mut lights : [[u32; 1000]; 1000] = [[0; 1000]; 1000];
     for line in BufReader::new(File::open("src/light_instructions.txt").ok().expect("Bad file_name")).lines() {
@@ -71,3 +67,4 @@ pub fn brightness() -> usize {
     lights.into_iter().map(|row| row.into_iter().fold(0, |sum : u32, curr| sum + curr))
         .fold(0, |sum, curr| sum + curr)
 }
+*/
