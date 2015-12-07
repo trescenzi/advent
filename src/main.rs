@@ -13,5 +13,5 @@ fn main() {
     println!("Number of nice texts: {}", day5::num_nice_texts());
     println!("Number of nice texts take two: {}", day5::num_nice_texts_take_two());
     println!("Number of lights left on {}", day6::lights_left_on());
-    //println!("Number of lights left on {}", day6::brightness());
+    println!("Brightness of lights left on {}", day6::brightness());
 }

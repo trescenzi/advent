@@ -43,9 +43,9 @@ pub fn lights_left_on() -> usize {
     lights.into_iter().map(|row| row.into_iter().filter(|x| **x).count())
         .fold(0, |sum, curr| sum + curr)
 }
-/*
-pub fn brightness() -> usize {
-    let mut lights : [[u32; 1000]; 1000] = [[0; 1000]; 1000];
+
+pub fn brightness() -> i32 {
+    let mut lights : [[i32; 1000]; 1000] = [[0; 1000]; 1000];
     for line in BufReader::new(File::open("src/light_instructions.txt").ok().expect("Bad file_name")).lines() {
         let (instruction, start_x, start_y, end_x, end_y) = parse_instruction(line.ok().expect("Bad line"));
         for y in start_y..end_y + 1 {
@@ -64,7 +64,6 @@ pub fn brightness() -> usize {
             }
         }
     }
-    lights.into_iter().map(|row| row.into_iter().fold(0, |sum : u32, curr| sum + curr))
+    lights.into_iter().map(|row| row.into_iter().fold(0, |sum, curr| sum + curr))
         .fold(0, |sum, curr| sum + curr)
 }
-*/
