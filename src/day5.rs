@@ -30,7 +30,7 @@ pub fn num_nice_texts() -> usize {
         let line_str : String = line.ok().expect("Bad line provided in file");
         let mut num_vowels : usize = 0;
         let mut has_double : bool = false;
-        let mut curr : char = ' ';
+        let mut curr : char;
         let mut prev : char = ' ';
 
         for c in line_str.chars() {
@@ -63,8 +63,6 @@ fn all_equal(a : char, b : char, c : char) -> bool {
 
 pub fn num_nice_texts_take_two() -> usize {
     let mut nice_texts : usize = 0;
-    let mut sep_doubles : usize = 0;
-    let mut sep_pairs : usize = 0;
     for line in BufReader::new(File::open("src/texts.txt").ok().expect("Bad file_name")).lines() {
 
         let line_str : String = line.ok().expect("Bad line provided in file");
@@ -80,12 +78,9 @@ pub fn num_nice_texts_take_two() -> usize {
 
             if !has_seperated_double && curr == prev_prev {
                 has_seperated_double = true;
-                sep_doubles += 1;
             }
 
             if !has_double_pair && !all_equal(curr, prev, prev_prev) && pairs.contains(&(prev, curr)) {
-                println!("double pair: str: {}, pair {:?}", line_str, (prev, curr));
-                sep_pairs += 1;
                 has_double_pair = true;
             }
 
@@ -105,6 +100,5 @@ pub fn num_nice_texts_take_two() -> usize {
             nice_texts += 1;
         }
     }
-    println!("seperated doubles: {} seperated pairs: {}", sep_doubles, sep_pairs);
     nice_texts
 }
